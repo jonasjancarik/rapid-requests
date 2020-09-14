@@ -1,0 +1,32 @@
+{
+  "name": "rapid-requests",
+  "version": "0.0.0",
+  "description": "JS plugin for sending rapid, concurrent (parallel) HTTP requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonas Jancarik",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "progress": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2"
+  },
+  "keywords": [
+    "async",
+    "axios",
+    "backend",
+    "http",
+    "multi-requests",
+    "node",
+    "parallel",
+    "promise",
+    "request",
+    "scrape"
+  ]
+}
