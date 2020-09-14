@@ -8,44 +8,46 @@
 
 It returns a promise / array of results, containing both successful and unsuccesful requests.
 
-## API
+# API
 
-### rapidRequests(urls, config?)
+## rapidRequests(urls, config?)
 
-#### urls
+### urls
 
 Type: `array`
 
 Array of URL strings.
 
-##### Example
+#### Example
 `['https://google.com', 'https://example.com']`
 
-#### config
+### config
 
 Type: `object`
 
 Available config values:
 
-##### responseTransform (`function`)
+#### responseTransform (`function`)
 
 Applied to each response as they come in, useful if you want to perform other time-expensive operations on each result and do not want to wait for all requests to be finished.
 
-##### resultTransform (`function`)
+#### resultTransform (`function`)
 
 Applied to each result after all requests are finished.
 
-##### progressBar (`boolean`)
+#### progressBar (`boolean`)
 
 Set to `true` to display a progress bar in the terminal.
 
-##### throttle (`integer`)
+You can also submit a [progress](https://www.npmjs.com/package/progress) template string.
+
+#### throttle (`integer`)
 
 Time in milliseconds to wait between sending requests (useful to avoid overloading your network interface or getting rate limited)
 
-##### requestTimeout (`integer`)
+#### axiosConfig (`object`)
 
-Time to wait for a response before considering a request timed-out. Timeout will result in `status: 'rejected'`.
+Note that by default, axios does not timeout requests. Use the `timeout` parameter if you want to set a timeout. Timeout will result in `status: 'rejected'`.
 
 ## returns
 
