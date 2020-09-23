@@ -23,7 +23,7 @@ Array of URL strings.
 
 ### config
 
-Type: `object`
+Type: `object`, optional
 
 Available config values:
 
@@ -35,7 +35,7 @@ Applied to each response as they come in, useful if you want to perform other ti
 
 Applied to each result after all requests are finished.
 
-#### progressBar (`boolean`)
+#### progressBar (`boolean`|`string`)
 
 Set to `true` to display a progress bar in the terminal.
 
