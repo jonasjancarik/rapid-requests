@@ -47,7 +47,9 @@ Time in milliseconds to wait between sending requests (useful to avoid overloadi
 
 #### axiosConfig (`object`)
 
-Note that by default, axios does not timeout requests. Use the `timeout` parameter if you want to set a timeout. Timeout will result in `status: 'rejected'`.
+Requests are made using Axios, so you can pass an axios-style config object which will be used for each request. The `url` parameter of the config object will be overwritten.
+
+Note that by default, axios does not set a timeout for requests. Use the `timeout` parameter if you want to set a timeout. Timeout will result in `status: 'rejected'`.
 
 ## returns
 
@@ -88,9 +90,11 @@ If there was an error:
 
 ```js
 rapidRequests(urls, {
-    // resultTransform,
     progressBar: true,
-    throttle: 100
+    throttle: 100,
+    axiosConfig: {
+        timeout: 1000
+    }
 })
 .then(results => {
         for (const result of results) {
