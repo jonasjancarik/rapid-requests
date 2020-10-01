@@ -1,29 +1,86 @@
+This package makes sending concurrent HTTP requests easy, with optional callbacks (transformations) applied to resolved requests while others are still pending.
+
+Under the hood, it uses [Axios](https://www.npmjs.com/package/axios) for the HTTP requests and makes uses of [Promise.allSettled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+
+# Installation
+
+```npm i rapid-requests```
+
 # Usage
 
-```const rapidRequests = require('./index')```
+```const rapidRequests = require('rapid-requests')```
 
 `rapidRequests` takes two arguments:
-- an array of URLs
-- a config object
+1) an `array` of URLs
+2) a config `object`
 
-It returns a promise / array of results, containing both successful and unsuccesful requests.
+Once all of the requests are finished, an array of results is returned,  containing both successful and unsuccesful requests (with error details included).
+
+## Example
+
+In this example, we are requesting responses from an API returning JSON objects like `{"posts":[{"id":456456,"views":5612},{"id":56289,"views":4562}]}` and saving the data to JSON files.
+
+```js
+rapidRequests(urls, {
+  progressBar: true,
+  throttle: 100,
+  axiosConfig: {
+    timeout: 1000
+  }
+})
+.then(results => {
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        for (const advert of result.value.response.data.posts) {
+          fs.writeFileSync(
+              `output/${post.post_id}.json`,
+              JSON.stringify(post, null, '\t')
+          )
+        }
+      }
+    }
+    console.log('Done.')
+  }
+)
+.catch(e => console.error(e))
+```
+
+Or using async/await:
+
+```js
+(async function () {
+  const results = await rapidRequests(urls, {
+    progressBar: true,
+    throttle: 100,
+    axiosConfig: {
+      timeout: 1000,
+    },
+  });
+  for (const result of results) {
+    if (result.status === 'fulfilled') {
+      for (const advert of result.value.response.data.posts) {
+        fs.writeFileSync(
+          `output/${post.post_id}.json`,
+          JSON.stringify(post, null, '\t'),
+        );
+      }
+    }
+  }
+}());
+```
 
 # API
 
 ## rapidRequests(urls, config?)
 
-### urls
-
-Type: `array`
+### urls (`array`)
 
 Array of URL strings.
 
 #### Example
 `['https://google.com', 'https://example.com']`
 
-### config
-
-Type: `object`, optional
+### config (`object`), optional
 
 Available config values:
 
@@ -33,7 +90,7 @@ Applied to each response as they come in, useful if you want to perform other ti
 
 #### resultTransform (`function`)
 
-Applied to each result after all requests are finished.
+Applied to each result after all requests are finished. This can be used to change the format of the final result objects, though it may be more transparent to process the result objects in your code in a .then() block or similar.
 
 #### progressBar (`boolean`|`string`)
 
@@ -51,9 +108,9 @@ Requests are made using Axios, so you can pass an axios-style config object whic
 
 Note that by default, axios does not set a timeout for requests. Use the `timeout` parameter if you want to set a timeout. Timeout will result in `status: 'rejected'`.
 
-## returns
+## Returns
 
-These results can have two forms:
+Results contained in the returned array can be of two types, depending on whether the particular request was successful or not.
 
 For successfuly resolved requests:
 
@@ -64,47 +121,24 @@ For successfuly resolved requests:
     url: "https://example.com",
     response: { ... },
     transformResult: null,
-  },
+  }
 }
 ```
 
 
-If there was an error:
+For requests during which an error occurred:
 
 ```js
 {
-	status: "rejected",
-	reason: {
-		url: "http://this.url.doesnt.exist",
-		error: {
-			message: "Request failed with status code 400",
-			name: "Error",
-			stack: "...",
-			config: { ... }
-		}
-	}
+  status: "rejected",
+  reason: {
+    url: "http://this.url.doesnt.exist",
+    error: {
+      message: "Request failed with status code 400",
+      name: "Error",
+      stack: "...",
+      config: { ... }
+    }
+  }
 }
 ```
-
-# Example
-
-```js
-rapidRequests(urls, {
-    progressBar: true,
-    throttle: 100,
-    axiosConfig: {
-        timeout: 1000
-    }
-})
-.then(results => {
-        for (const result of results) {
-            if (result.status === 'fulfilled') {
-                for (const advert of result.value.response.data.advert) {
-                    fs.writeFileSync(`output/${advert.advert_id}.json`, JSON.stringify(advert, null, '\t'))
-                }
-            }
-        }
-        console.log('Done.')
-    }
-)
-.catch(e => console.log(e))```
