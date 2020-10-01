@@ -1,6 +1,6 @@
 {
   "name": "rapid-requests",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JS plugin for sending rapid, concurrent (parallel) HTTP requests",
   "main": "index.js",
   "scripts": {
