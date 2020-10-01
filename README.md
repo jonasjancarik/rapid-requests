@@ -86,11 +86,15 @@ Available config values:
 
 #### responseTransform (`function`)
 
-Applied to each response as they come in, useful if you want to perform other time-expensive operations on each result and do not want to wait for all requests to be finished.
+Applied to each successfully fulfilled request response as they come in, useful if you want to perform other time-expensive operations on each result and do not want to wait for all requests to be finished.
+
+The outcome (returned value) of `responseTransform` will be available under the `value.transformResult` key *(see [Returns](#returns)).*
 
 #### resultTransform (`function`)
 
-Applied to each result after all requests are finished. This can be used to change the format of the final result objects, though it may be more transparent to process the result objects in your code in a .then() block or similar.
+Applied to each result after all requests are finished. This can be used to change the format of the final result objects.
+
+Note that while this option is here, processing the result objects in a .then() block or similar after rapidRequests is finished may lead to a more readable code.
 
 #### progressBar (`boolean`|`string`)
 
