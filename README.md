@@ -86,7 +86,7 @@ Available config values:
 
 #### responseTransform (`function`)
 
-Applied to each successfully fulfilled request response as they come in, useful if you want to perform other time-expensive operations on each result and do not want to wait for all requests to be finished.
+Applied to each successfully fulfilled request response as they come in, useful if you want to perform other time costly operations on each result and do not want to wait for all requests to be finished.
 
 The outcome (returned value) of `responseTransform` will be available under the `value.transformResult` key *(see [Returns](#returns)).*
 
@@ -104,7 +104,9 @@ You can also submit a [progress](https://www.npmjs.com/package/progress) templat
 
 #### throttle (`integer`)
 
-Time in milliseconds to wait between sending requests (useful to avoid overloading your network interface or getting rate limited)
+Time in milliseconds to wait between sending requests (useful to avoid overloading your network interface or getting rate limited).
+
+Note that this really a wait time between *sending* requests regardless of when the response comes back, not between *receiving a response* and sending the next request.
 
 #### axiosConfig (`object`)
 
