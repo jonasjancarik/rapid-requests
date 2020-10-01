@@ -58,9 +58,9 @@ Or using async/await:
   });
   for (const result of results) {
     if (result.status === 'fulfilled') {
-      for (const advert of result.value.response.data.posts) {
+      for (const post of result.value.response.data.posts) {
         fs.writeFileSync(
-          `output/${post.post_id}.json`,
+          `output/${post.id}.json`,
           JSON.stringify(post, null, '\t'),
         );
       }
