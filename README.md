@@ -84,17 +84,21 @@ Array of URL strings.
 
 Available config values:
 
-#### responseTransform (`function`)
+#### responseTransform(response) (`function`)
 
 Applied to each successfully fulfilled request response as they come in, useful if you want to perform other time costly operations on each result and do not want to wait for all requests to be finished.
 
-The outcome (returned value) of `responseTransform` will be available under the `value.transformResult` key *(see [Returns](#returns)).*
+The outcome (returned value) of `responseTransform` will be available under the `value.transformResult` key *(see [Returns](#returns)).* Note that the responseTransform function can also return a promise.
 
-#### resultTransform (`function`)
+#### resultTransform(result) (`function`)
 
-Applied to each result after all requests are finished. This can be used to change the format of the final result objects.
+Applied to each result after all requests are finished. This can be used to change the format of the final result objects. You can also return a promise here.
 
 Note that while this option is here, processing the result objects in a .then() block or similar after rapidRequests is finished may lead to a more readable code.
+
+#### discardResponse (`boolean`)
+
+If set to `true`, the original responses will not be included in the final results object (before going into the resultTransform action). You can still apply responseTransform actions to it, though. This can be used to avoid running out of memory with a large number of (large) responses.
 
 #### progressBar (`boolean`|`string`)
 
