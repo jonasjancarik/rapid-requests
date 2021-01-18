@@ -1,6 +1,6 @@
 {
   "name": "rapid-requests",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "JS plugin for sending rapid, concurrent (parallel) HTTP requests",
   "main": "index.js",
   "homepage": "https://github.com/jonasjancarik/rapid-requests#readme",
