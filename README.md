@@ -96,6 +96,10 @@ Applied to each result after all requests are finished. This can be used to chan
 
 Note that while this option is here, processing the result objects in a .then() block or similar after rapidRequests is finished may lead to a more readable code.
 
+#### errorTransform(error) (`function`)
+
+Applied immediately after a call fails, similar to responseTransform. The error object will be an Axios error object.
+
 #### discardResponse (`boolean`)
 
 If set to `true`, the original responses will not be included in the final results object (before going into the resultTransform action). You can still apply responseTransform actions to it, though. This can be used to avoid running out of memory with a large number of (large) responses.
