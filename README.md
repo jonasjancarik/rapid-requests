@@ -69,6 +69,27 @@ Or using async/await:
 }());
 ```
 
+### Downloading files
+
+You can use `responseTransform` to write streams to files:
+
+```js
+rapidRequests(urls, {
+    progressBar: true,
+    throttle: 100,
+    responseTransform: (response) => {
+        if (response.status == 200) {
+            const writer = fs.createWriteStream(`output/${response.request.path.split('/').pop()}`)
+            response.data.pipe(writer)
+        }
+    },
+    axiosConfig: {
+        timeout: 1000,
+        responseType: 'stream'
+    },
+});
+```
+
 # API
 
 ## rapidRequests(urls, config?)
